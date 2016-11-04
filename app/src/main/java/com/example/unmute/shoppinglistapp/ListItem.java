@@ -1,13 +1,13 @@
 package com.example.unmute.shoppinglistapp;
 
-public class ListItem {
+class ListItem {
     private int id;
     private String name;
     private boolean gathered;
     private String note;
     private int shoppingListId;
 
-    public ListItem() {
+    ListItem() {
 
     }
 
@@ -31,24 +31,24 @@ public class ListItem {
         return name;
     }
 
-    public void setGathered(boolean gathered) {
+    void setGathered(boolean gathered) {
         this.gathered = gathered;
     }
-    public boolean getGathered() {
+    boolean getGathered() {
         return gathered;
     }
 
-    public void setNote(String note) {
+    void setNote(String note) {
         this.note = note;
     }
-    public String getNote() {
+    String getNote() {
         return note;
     }
 
-    public void setShoppingListId(int shoppingListId) {
+    void setShoppingListId(int shoppingListId) {
         this.shoppingListId = shoppingListId;
     }
-    public int getShoppingListId() {
+    int getShoppingListId() {
         return shoppingListId;
     }
 }

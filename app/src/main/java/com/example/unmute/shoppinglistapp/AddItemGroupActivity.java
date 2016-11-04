@@ -15,50 +15,54 @@ import java.util.List;
 
 public class AddItemGroupActivity extends AppCompatActivity {
 
-    List<String> itemList = new ArrayList<String>();
+    List<String> itemList = new ArrayList<>();
     AutoCompleteTextView itemNameTextView;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item_group);
 
-        Button addItemButton = (Button)findViewById(R.id.addItemButton);
+        Button addItemButton = (Button)findViewById(R.id.group_AddItemButton);
         Button saveGroupButton = (Button)findViewById(R.id.group_SaveButton);
         itemNameTextView = (AutoCompleteTextView)findViewById(R.id.group_AddItemEditText);
 
         DatabaseHandler db = new DatabaseHandler(this);
         List<Item> items = db.getAllItems();
-        List<String> itemNameList = new ArrayList<String>();
+        List<String> itemNameList = new ArrayList<>();
         for (Item item : items) {
             itemNameList.add(item.getName());
         }
 
-        ArrayAdapter<String> itemNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemNameList);
+        ArrayAdapter<String> itemNameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemNameList);
 
         if (!itemNameList.isEmpty())
             itemNameTextView.setAdapter(itemNameAdapter);
 
         ListView listView = (ListView)findViewById(R.id.group_ItemListVIew);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemList);
-        listView.setAdapter(adapter);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
+        if (listView != null)
+            listView.setAdapter(adapter);
 
-        addItemButton.setOnClickListener(new View.OnClickListener() {
+        if (addItemButton != null)
+            addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addItemToList(adapter);
+                addItemToList();
             }
         });
 
+        if (saveGroupButton != null)
         saveGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveItemGroup(adapter);
+                saveItemGroup();
             }
         });
     }
 
-    public void addItemToList(ArrayAdapter<String> adapter) {
+    public void addItemToList() {
         String itemName = itemNameTextView.getText().toString();
         if (!itemName.isEmpty())
         {
@@ -78,9 +82,11 @@ public class AddItemGroupActivity extends AppCompatActivity {
         itemNameTextView.setText("");
     }
 
-    public void saveItemGroup(ArrayAdapter<String> adapter) {
+    public void saveItemGroup() {
         EditText groupNameTextView = (EditText)findViewById(R.id.group_NameOfGroupEditText);
-        String groupName = groupNameTextView.getText().toString();
+        String groupName = "";
+        if (groupNameTextView != null)
+            groupName = groupNameTextView.getText().toString();
         if (!groupName.isEmpty() && !itemList.isEmpty()) {
             DatabaseHandler db = new DatabaseHandler(this);
             ItemGroup ig = db.getItemGroupByName(groupName);
@@ -88,7 +94,7 @@ public class AddItemGroupActivity extends AppCompatActivity {
             if (ig.getName() == null) {
                 ig = new ItemGroup();
                 ig.setName(groupName);
-                List<Item> items = new ArrayList<Item>();
+                List<Item> items = new ArrayList<>();
                 for (String name : itemList) {
                     Item item = db.getItemByName(name);
                     items.add(item);
@@ -102,6 +108,7 @@ public class AddItemGroupActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, R.string.group_save_group_empty_toast, Toast.LENGTH_SHORT).show();
         }
-        groupNameTextView.setText("");
+        if (groupNameTextView != null)
+            groupNameTextView.setText("");
     }
 }

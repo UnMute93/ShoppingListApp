@@ -16,57 +16,46 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar)findViewById(R.id.toolbar_main);
         setSupportActionBar(myToolbar);
 
-        Button createNewButton = (Button)this.findViewById(R.id.createNewButton);
-        createNewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startCreateShoppingListActivity(view);
-            }
-        });
+        Button createNewButton = (Button)this.findViewById(R.id.main_CreateNewButton);
+        if (createNewButton != null)
+            createNewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(CreateShoppingListActivity.class);
+                }
+            });
 
         Button viewButton = (Button)this.findViewById(R.id.main_ViewListsButton);
-        viewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startListShoppingListsActivity();
-            }
-        });
+        if (viewButton != null)
+            viewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(ListShoppingListsActivity.class);
+                }
+            });
 
         Button addGroupButton = (Button)this.findViewById(R.id.main_AddItemGroupsButton);
-        addGroupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAddItemGroupActivity();
-            }
-        });
+        if (addGroupButton != null)
+            addGroupButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(AddItemGroupActivity.class);
+                }
+            });
 
         //Instick för manipulering av databas inom appen.
-        Button dbDebugButton = (Button)this.findViewById(R.id.settingsButton);
-        dbDebugButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startDebug(view);
-            }
-        });
+        Button dbDebugButton = (Button)this.findViewById(R.id.main_SettingsButton);
+        if (dbDebugButton != null)
+            dbDebugButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(AndroidDatabaseManager.class);
+                }
+            });
     }
 
-    public void startCreateShoppingListActivity(View v) {
-        Intent intent = new Intent(this, CreateShoppingListActivity.class);
-        startActivity(intent);
-    }
-
-    public void startListShoppingListsActivity() {
-        Intent intent = new Intent(this, ListShoppingListsActivity.class);
-        startActivity(intent);
-    }
-
-    public void startAddItemGroupActivity() {
-        Intent intent = new Intent(this, AddItemGroupActivity.class);
-        startActivity(intent);
-    }
-
-    public void startDebug(View v) {
-        Intent intent = new Intent(this, AndroidDatabaseManager.class);
+    public void startActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
         startActivity(intent);
     }
 }

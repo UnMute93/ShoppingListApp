@@ -28,7 +28,7 @@
         <AutoCompleteTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listSetting_ItemNameEditText"
+            android:id="@+id/listSettings_ItemNameEditText"
             android:hint="@string/add_item_hint"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/listSettings_TitleEditText"
@@ -44,7 +44,7 @@
             android:id="@+id/listSettings_NotesEditText"
             android:hint="@string/add_note_hint"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/listSetting_ItemNameEditText"
+            app:layout_constraintTop_toBottomOf="@+id/listSettings_ItemNameEditText"
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="16dp" />

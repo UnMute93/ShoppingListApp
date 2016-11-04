@@ -3,13 +3,13 @@ package com.example.unmute.shoppinglistapp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemGroup {
+class ItemGroup {
     private int id;
     private String name;
     private List<Item> itemList;
 
-    public ItemGroup() {
-        this.itemList = new ArrayList<Item>();
+    ItemGroup() {
+        this.itemList = new ArrayList<>();
     }
 
     public ItemGroup(int id, String name, List<Item> itemList) {
@@ -32,13 +32,13 @@ public class ItemGroup {
         return name;
     }
 
-    public void setItemList(List<Item> itemList) {
+    void setItemList(List<Item> itemList) {
         this.itemList = itemList;
     }
-    public void addItem(Item item) {
+    void addItem(Item item) {
         itemList.add(item);
     }
-    public List<Item> getAllItems() {
+    List<Item> getAllItems() {
         return itemList;
     }
     public Item getItem(int id) {

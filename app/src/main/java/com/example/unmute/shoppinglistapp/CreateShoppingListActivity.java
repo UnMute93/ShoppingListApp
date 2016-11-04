@@ -1,7 +1,6 @@
 package com.example.unmute.shoppinglistapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -38,17 +37,18 @@ public class CreateShoppingListActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_shopping_list);
+        SectionsPagerAdapter mSectionsPagerAdapter;
+
+        /**
+         * The {@link ViewPager} that will host the section contents.
+         */
+        ViewPager mViewPager;
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,10 +58,12 @@ public class CreateShoppingListActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        if (mViewPager != null)
+            mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        if (tabLayout != null)
+            tabLayout.setupWithViewPager(mViewPager);
     }
 
 
@@ -93,7 +95,7 @@ public class CreateShoppingListActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -127,7 +129,7 @@ public class CreateShoppingListActivity extends AppCompatActivity {
         }
     }
 
-    public static List<ListItem> shoppingListItems = new ArrayList<ListItem>();
+    public static List<ListItem> shoppingListItems = new ArrayList<>();
 
     public static class ShoppingListSettings extends Fragment {
         /**
@@ -162,11 +164,11 @@ public class CreateShoppingListActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_create_shopping_list_settings, container, false);
 
-            shoppingListItems = new ArrayList<ListItem>();
+            shoppingListItems = new ArrayList<>();
 
             Button addItemButton = (Button)rootView.findViewById(R.id.listSettings_AddItemButton);
             Button addGroupButton = (Button)rootView.findViewById(R.id.listSettings_AddGroupButton);
-            Button saveButton = (Button)rootView.findViewById(R.id.saveShoppingListButton);
+            Button saveButton = (Button)rootView.findViewById(R.id.listSettings_SaveButton);
 
             addItemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -200,25 +202,27 @@ public class CreateShoppingListActivity extends AppCompatActivity {
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            nameText = (AutoCompleteTextView)getView().findViewById(R.id.listSetting_ItemNameEditText);
-            noteText = (EditText)getView().findViewById(R.id.listSettings_NotesEditText);
-            groupText = (AutoCompleteTextView)getView().findViewById(R.id.listSettings_GroupNameEditText);
-            titleText = (EditText)getView().findViewById(R.id.listSettings_TitleEditText);
+            if (getView() != null) {
+                nameText = (AutoCompleteTextView) getView().findViewById(R.id.listSettings_ItemNameEditText);
+                noteText = (EditText) getView().findViewById(R.id.listSettings_NotesEditText);
+                groupText = (AutoCompleteTextView) getView().findViewById(R.id.listSettings_GroupNameEditText);
+                titleText = (EditText) getView().findViewById(R.id.listSettings_TitleEditText);
+            }
 
             DatabaseHandler db = new DatabaseHandler(this.getContext());
             List<Item> itemList = db.getAllItems();
-            List<String> itemNameList = new ArrayList<String>();
+            List<String> itemNameList = new ArrayList<>();
             for (Item item : itemList) {
                 itemNameList.add(item.getName());
             }
             List<ItemGroup> groupList = db.getAllItemGroups();
-            List<String> groupNameList = new ArrayList<String>();
+            List<String> groupNameList = new ArrayList<>();
             for (ItemGroup group : groupList) {
                 groupNameList.add(group.getName());
             }
 
-            ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, itemNameList);
-            ArrayAdapter<String> groupAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, groupNameList);
+            ArrayAdapter<String> nameAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_list_item_1, itemNameList);
+            ArrayAdapter<String> groupAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_list_item_1, groupNameList);
 
             if (!itemList.isEmpty())
                 nameText.setAdapter(nameAdapter);
@@ -228,16 +232,19 @@ public class CreateShoppingListActivity extends AppCompatActivity {
 
         public void addItemToList() {
             String itemName = nameText.getText().toString();
+            String notes = noteText.getText().toString();
+
             if (!itemName.isEmpty())
             {
                 ListItem li = new ListItem();
                 li.setName(itemName);
                 li.setGathered(false);
-                li.setNote(noteText.getText().toString());
+                li.setNote(notes);
 
                 shoppingListItems.add(li);
 
                 DatabaseHandler db = new DatabaseHandler(this.getContext());
+
                 Item i = db.getItemByName(itemName);
                 if (i.getName() == null) {
                     db.addItem(new Item(itemName));
@@ -359,12 +366,12 @@ public class CreateShoppingListActivity extends AppCompatActivity {
         }
 
         public void loadItems() {
-            CreateShoppingListAdapter adapter = new CreateShoppingListAdapter(this.getContext(), (ArrayList)shoppingListItems);
+            CreateShoppingListAdapter adapter = new CreateShoppingListAdapter(this.getContext(), (ArrayList<ListItem>)shoppingListItems);
             listView.setAdapter(adapter);
         }
 
         public class CreateShoppingListAdapter extends ArrayAdapter<ListItem> {
-            public CreateShoppingListAdapter(Context context, ArrayList<ListItem> listItems) {
+            CreateShoppingListAdapter(Context context, ArrayList<ListItem> listItems) {
                 super(context, 0, listItems);
             }
 
@@ -376,8 +383,8 @@ public class CreateShoppingListActivity extends AppCompatActivity {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_create_shopping_list, parent, false);
                 }
 
-                TextView titleText = (TextView)convertView.findViewById(R.id.itemNameTextView);
-                TextView noteText = (TextView)convertView.findViewById(R.id.notesTextView);
+                TextView titleText = (TextView)convertView.findViewById(R.id.liCreate_NameTextView);
+                TextView noteText = (TextView)convertView.findViewById(R.id.liCreate_NotesTextView);
 
                 if (li != null) {
                     titleText.setText(li.getName());

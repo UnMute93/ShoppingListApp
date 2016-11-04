@@ -29,22 +29,24 @@ public class ListShoppingListsActivity extends AppCompatActivity{
         DatabaseHandler db = new DatabaseHandler(this);
         List<ShoppingList> list = db.getAllShoppingLists();
 
-        ListShoppingListsAdapter adapter = new ListShoppingListsAdapter(this, (ArrayList)list);
-        ListView lv = (ListView)findViewById(R.id.shoppingListListView);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getBaseContext(),ViewShoppingListActivity.class);
-                ShoppingList sl = (ShoppingList)adapterView.getItemAtPosition(i);
-                intent.putExtra("id", sl.getId());
-                startActivity(intent);
-            }
-        });
+        ListShoppingListsAdapter adapter = new ListShoppingListsAdapter(this, (ArrayList<ShoppingList>)list);
+        ListView listView = (ListView)findViewById(R.id.viewShoppingList_ListView);
+        if (listView != null) {
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(getBaseContext(), ViewShoppingListActivity.class);
+                    ShoppingList sl = (ShoppingList) adapterView.getItemAtPosition(i);
+                    intent.putExtra("id", sl.getId());
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     public class ListShoppingListsAdapter extends ArrayAdapter<ShoppingList> {
-        public ListShoppingListsAdapter(Context context, ArrayList<ShoppingList> shoppingLists) {
+        ListShoppingListsAdapter(Context context, ArrayList<ShoppingList> shoppingLists) {
             super(context, 0, shoppingLists);
         }
 
@@ -56,8 +58,8 @@ public class ListShoppingListsActivity extends AppCompatActivity{
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listitem_list_shopping_lists, parent, false);
             }
 
-            TextView titleText = (TextView)convertView.findViewById(R.id.shoppingListTitleTextView);
-            TextView dateText = (TextView)convertView.findViewById(R.id.shoppingListDateTextView);
+            TextView titleText = (TextView)convertView.findViewById(R.id.liList_TitleTextView);
+            TextView dateText = (TextView)convertView.findViewById(R.id.liList_DateTextView);
 
             if (sl != null) {
                 titleText.setText(sl.getTitle());

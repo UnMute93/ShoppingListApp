@@ -8,12 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 2; //Skapar databasen på nytt vid ökning av värdet.
     private static final String DATABASE_NAME = "shoppingListDB";
@@ -90,7 +89,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public DatabaseHandler (Context context) {
+    DatabaseHandler (Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -145,7 +144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /* CRUD METHODS */
 
     //SHOPPING LIST
-    public int addShoppingList(ShoppingList sl) {
+    int addShoppingList(ShoppingList sl) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -172,7 +171,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_SL_ID + " = li." + KEY_LI_SL_ID + " WHERE sl."
                 + KEY_SL_ID + " = " + id;
 
-        List<ListItem> list = new ArrayList<ListItem>();
+        List<ListItem> list = new ArrayList<>();
 
         Cursor itemsCursor = db.rawQuery(itemsQuery, null);
 
@@ -207,8 +206,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return sl;
     }
-    public List<ShoppingList> getAllShoppingLists() { //WITHOUT LISTITEMS
-        List<ShoppingList> list = new ArrayList<ShoppingList>();
+    List<ShoppingList> getAllShoppingLists() { //WITHOUT LISTITEMS
+        List<ShoppingList> list = new ArrayList<>();
 
         String query = "SELECT * FROM " + TABLE_SHOPPING_LIST;
 
@@ -263,7 +262,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //ITEM GROUP
-    public void addItemGroup(ItemGroup ig) {
+    void addItemGroup(ItemGroup ig) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues igValues = new ContentValues();
@@ -290,7 +289,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_IGI_ITEM_ID + " = i." + KEY_ITEM_ID + " WHERE igi." + KEY_IGI_ITEM_GROUP_ID
                 + " = " + id;
 
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
 
         Cursor itemsCursor = db.rawQuery(itemsQuery, null);
 
@@ -319,7 +318,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return ig;
     }
-    public ItemGroup getItemGroupByName(String name) {
+    ItemGroup getItemGroupByName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         ItemGroup ig = new ItemGroup();
 
@@ -329,7 +328,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + " ig ON igi." + KEY_IGI_ITEM_GROUP_ID + " = ig." + KEY_IG_ID + " WHERE ig."
                 + KEY_IG_NAME + " = '" + name + "'";
 
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
 
         Cursor itemsCursor = db.rawQuery(itemsQuery, null);
 
@@ -358,10 +357,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return ig;
     }
-    public List<ItemGroup> getAllItemGroups() {
+    List<ItemGroup> getAllItemGroups() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        List<ItemGroup> list = new ArrayList<ItemGroup>();
+        List<ItemGroup> list = new ArrayList<>();
 
         String itemsQuery = "SELECT i." + KEY_ITEM_ID + ", i." + KEY_ITEM_NAME + " FROM "
                 + TABLE_ITEM_GROUP_ITEM + " igi INNER JOIN " + TABLE_ITEM + " i ON igi."
@@ -415,7 +414,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //ITEM
-    public void addItem(Item i) {
+    void addItem(Item i) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -425,7 +424,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
     //GET ITEM
-    public Item getItemByName(String name) {
+    Item getItemByName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Item item = new Item();
 
@@ -442,10 +441,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return item;
     }
-    public List<Item> getAllItems() {
+    List<Item> getAllItems() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        List<Item> list = new ArrayList<Item>();
+        List<Item> list = new ArrayList<>();
 
         String query = "SELECT * FROM " + TABLE_ITEM;
         Cursor cursor = db.rawQuery(query, null);
@@ -476,7 +475,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //LISTITEM
-    public void addListItem(ListItem li) {
+    private void addListItem(ListItem li) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -489,9 +488,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
     //GET
-    public List<ListItem> getListItems(int shoppingListId) {
+    List<ListItem> getListItems(int shoppingListId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<ListItem> list = new ArrayList<ListItem>();
+        List<ListItem> list = new ArrayList<>();
 
         String query = "SELECT * FROM " + TABLE_LIST_ITEM + " WHERE " + KEY_LI_SL_ID + " = " + shoppingListId;
 

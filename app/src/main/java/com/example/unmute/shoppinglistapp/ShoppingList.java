@@ -4,44 +4,41 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import java.util.Date;
-
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class ShoppingList {
+class ShoppingList {
     private int id;
-    private @NonNull String title = "";
+    private String title = "";
     private boolean setAlarm;
     private @Nullable Timestamp alarmDate;
     private Timestamp createdDate;
     private List<ListItem> listItems;
 
-    public ShoppingList() {
+    ShoppingList() {
 
     }
-    public ShoppingList(int id, @NonNull String title, boolean setAlarm, @Nullable Timestamp alarmDate) {
+    public ShoppingList(int id, String title, boolean setAlarm, @Nullable Timestamp alarmDate) {
         this.id = id;
         this.title = title;
         this.setAlarm = setAlarm;
         this.alarmDate = alarmDate;
         this.createdDate = new Timestamp(Calendar.getInstance().getTimeInMillis());
-        this.listItems = new ArrayList<ListItem>();
+        this.listItems = new ArrayList<>();
     }
-    public ShoppingList(int id, @NonNull String title, boolean setAlarm, @Nullable Timestamp alarmDate, Timestamp createdDate) {
+    public ShoppingList(int id, String title, boolean setAlarm, @Nullable Timestamp alarmDate, Timestamp createdDate) {
         this.id = id;
         this.title = title;
         this.setAlarm = setAlarm;
         this.alarmDate = alarmDate;
         this.createdDate = createdDate;
-        this.listItems = new ArrayList<ListItem>();
+        this.listItems = new ArrayList<>();
     }
-    public ShoppingList(@NonNull String title, boolean setAlarm, @Nullable Timestamp alarmDate) {
+    ShoppingList(String title, boolean setAlarm, @Nullable Timestamp alarmDate) {
         this.title = title;
         this.setAlarm = setAlarm;
         this.alarmDate = alarmDate;
         this.createdDate = new Timestamp(Calendar.getInstance().getTimeInMillis());
-        this.listItems = new ArrayList<ListItem>();
+        this.listItems = new ArrayList<>();
     }
 
     public void setId(int id) {
@@ -51,52 +48,49 @@ public class ShoppingList {
         return id;
     }
 
-    public void setTitle(@NonNull String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
-    public @NonNull String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setSetAlarm(boolean setAlarm) {
+    void setSetAlarm(boolean setAlarm) {
         this.setAlarm = setAlarm;
     }
-    public boolean getSetAlarm() {
+    boolean getSetAlarm() {
         return setAlarm;
     }
 
-    public void setAlarmDate(@Nullable Timestamp alarmDate) {
+    void setAlarmDate(@Nullable Timestamp alarmDate) {
         this.alarmDate = alarmDate;
     }
     public @Nullable Timestamp getAlarmDate() {
         return alarmDate;
     }
-    public @Nullable Long getAlarmDateInMillis() {
-        try {
+    @Nullable Long getAlarmDateInMillis() {
+        if (alarmDate != null)
             return alarmDate.getTime();
-        }
-        catch (NullPointerException e) {
-            return null;
-        }
+        return null;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
+    void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
     public Timestamp getCreatedDate() {
         return createdDate;
     }
-    public long getCreatedDateInMillis() {
+    long getCreatedDateInMillis() {
         return createdDate.getTime();
     }
 
-    public void setListItems(List<ListItem> listItems) {
+    void setListItems(List<ListItem> listItems) {
         this.listItems = listItems;
     }
     public void addListItem(ListItem li) {
         listItems.add(li);
     }
-    public List<ListItem> getAllListItems() {
+    List<ListItem> getAllListItems() {
         return listItems;
     }
 }
