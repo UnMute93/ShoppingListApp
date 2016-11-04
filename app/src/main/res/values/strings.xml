@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">ShoppingListApp</string>
+
+    <!-- MainActivity -->
+    <string name="main_settings">Settings</string>
+    <string name="main_create_lists">Create New Shopping List</string>
+    <string name="main_view_lists">View Shopping Lists</string>
+    <string name="main_manage_item_groups">Add Item Groups</string>
+
+    <!-- Create Fragment -->
+    <string name="title_hint">Title</string>
+    <string name="add_item_hint">Name of item</string>
+    <string name="add_note_hint">Optional notes</string>
+    <string name="add_item_button">Add item</string>
+    <string name="add_item_empty_toast">The item field is empty.</string>
+    <string name="add_item_success_toast">Item added to the shopping list.</string>
+    <string name="add_group_hint">Name of group</string>
+    <string name="add_group_of_items_button">Add group of items</string>
+    <string name="add_group_empty_toast">The group field is empty.</string>
+    <string name="add_group_success_toast">Group of items added to the shopping list.</string>
+    <string name="add_group_failure_toast">The group does not exist.</string>
+    <string name="set_alert_checkbox">Set notification alert</string>
+    <string name="title_activity_create_shopping_list">CreateShoppingListActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="save_button">Save shopping list</string>
+    <string name="save_list_success_toast">Shopping list saved.</string>
+    <string name="save_list_empty_toast">Title field and/or list is empty.</string>
+
+    <!-- Add Item Group -->
+    <string name="group_name_hint">Name of group</string>
+    <string name="group_add_item_hint">Name of item</string>
+    <string name="group_add_item_button">Add item</string>
+    <string name="group_add_item_success_toast">Item added to the group.</string>
+    <string name="group_add_item_empty_toast">The item field is empty.</string>
+    <string name="group_save_group_button">Save group</string>
+    <string name="group_save_group_success_toast">Item group saved.</string>
+    <string name="group_save_group_empty_toast">Group name field and/or list is empty.</string>
+
+    <!-- Exception Toasts -->
+    <string name="exc_something_went_wrong">Something went wrong.</string>
+</resources>
