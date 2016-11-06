@@ -21,14 +21,10 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ViewShoppingListActivity" />
-        <activity
-            android:name=".AndroidDatabaseManager"
-            android:label="AndroidDatabaseManager"
-            android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".ListShoppingListsActivity" />
         <activity android:name=".AddItemGroupActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

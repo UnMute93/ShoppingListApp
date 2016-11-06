@@ -42,16 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(AddItemGroupActivity.class);
                 }
             });
-
-        //Instick för manipulering av databas inom appen.
-        Button dbDebugButton = (Button)this.findViewById(R.id.main_SettingsButton);
-        if (dbDebugButton != null)
-            dbDebugButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(AndroidDatabaseManager.class);
-                }
-            });
     }
 
     public void startActivity(Class activity) {
