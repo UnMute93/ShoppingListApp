@@ -475,7 +475,7 @@ class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //LISTITEM
-    private void addListItem(ListItem li) {
+    public void addListItem(ListItem li) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();

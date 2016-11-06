@@ -293,6 +293,7 @@ public class CreateShoppingListActivity extends AppCompatActivity {
             {
                 DatabaseHandler db = new DatabaseHandler(this.getContext());
                 ShoppingList sl = new ShoppingList(title, false, null);
+                sl.setListItems(list);
 
                 try {
                     db.addShoppingList(sl);
@@ -345,7 +346,7 @@ public class CreateShoppingListActivity extends AppCompatActivity {
             return rootView;
         }
 
-        /*@Override
+        @Override
         public void setUserVisibleHint(boolean isVisibleToUser) {
             super.setUserVisibleHint(isVisibleToUser);
 
@@ -357,7 +358,7 @@ public class CreateShoppingListActivity extends AppCompatActivity {
                     onPause();
                 }
             }
-        }*/
+        }
 
         @Override
         public void onResume() {
